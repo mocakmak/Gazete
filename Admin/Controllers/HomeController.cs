@@ -21,6 +21,8 @@ namespace Admin.Controllers
         {
             return View();
         }
+
+
         [AllowAnonymous, HttpPost]
         public ActionResult Login(string email, string password)
         {   //   LINQ

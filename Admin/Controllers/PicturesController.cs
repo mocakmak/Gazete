@@ -10,7 +10,7 @@ using Data;
 
 namespace Admin.Controllers
 {
-    public class PicturesController : Controller
+    public class PicturesController : BaseController
     {
         private gazeteContainer db = new gazeteContainer();
 

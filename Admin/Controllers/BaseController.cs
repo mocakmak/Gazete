@@ -6,13 +6,11 @@ using System.Web.Mvc;
 
 namespace Admin.Controllers
 {
+    [Filters.AdminAuthorize]
     public class BaseController : Controller
     {
         // GET: Base
-        [Filters.AdminAuthorize]
-        public ActionResult Index()
-        {
-            return View();
-        }
+        
+        
     }
 }
