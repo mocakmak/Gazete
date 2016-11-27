@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c2377724907c4c4ba306d307da2085fd" Name="Diagram1" DisplayType="true" >
+        <EntityTypeShape EntityType="gazete.User" Width="1.5" PointX="1.625" PointY="0.875" />
+        <EntityTypeShape EntityType="gazete.UserType" Width="1.5" PointX="4" PointY="0.75" />
+        <EntityTypeShape EntityType="gazete.Author" Width="1.5" PointX="6.125" PointY="0.625" />
+        <EntityTypeShape EntityType="gazete.News" Width="1.5" PointX="11.125" PointY="4.125" />
+        <EntityTypeShape EntityType="gazete.NewsType" Width="1.5" PointX="4.25" PointY="3.375" />
+        <EntityTypeShape EntityType="gazete.Category" Width="1.5" PointX="6.75" PointY="3.125" />
+        <EntityTypeShape EntityType="gazete.Picture" Width="1.5" PointX="8.375" PointY="0.625" />
+        <EntityTypeShape EntityType="gazete.Comment" Width="1.5" PointX="8.5" PointY="3.25" />
+        <EntityTypeShape EntityType="gazete.Payment" Width="1.5" PointX="11.5" PointY="1.375" />
+        <AssociationConnector Association="gazete.UserTypeUser" />
+        <AssociationConnector Association="gazete.UserPayment" />
+        <AssociationConnector Association="gazete.UserComment" />
+        <AssociationConnector Association="gazete.CategoryNews" />
+        <AssociationConnector Association="gazete.AuthorNews" />
+        <AssociationConnector Association="gazete.NewsTypeNews" />
+        <AssociationConnector Association="gazete.NewsPicture" />
+        <AssociationConnector Association="gazete.NewsComment" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,80 @@
+﻿@model Data.News
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>News</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Baslik)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Baslik)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Text)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.YayimTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YayimTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResimYol)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResimYol)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.Adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.Adi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Author.Adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author.Adi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NewsType.Adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NewsType.Adi)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
