@@ -22,8 +22,8 @@
             @Html.DisplayNameFor(model => model.Text)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Text)
+        <dd style="border: 1px solid #DDDDDD;padding:5px 10px">>
+            @Html.Raw(Model.Text)
         </dd>
 
         <dt>
@@ -39,7 +39,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ResimYol)
+            <img src="@Url.Action("ResimYol",new{@id = Model.Id})" />
         </dd>
 
         <dt>
@@ -72,3 +72,6 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<script src="~/Scripts/tinymce/tinymce.min.js"></script>
+<script>tinymce.init({ selector: 'textarea' });</script>

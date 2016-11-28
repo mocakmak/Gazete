@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Data;
+using Admin.Helpers;
+using System.Drawing.Imaging;
 
 namespace Admin.Controllers
 {
@@ -50,10 +52,18 @@ namespace Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Baslik,Text,YayimTarihi,ResimYol,CategoryId,AuthorId,NewsTypeId")] News news)
+        [ValidateInput(false)]
+        public ActionResult Create([Bind(Include = "Id,Baslik,Text,YayimTarihi,CategoryId,AuthorId,NewsTypeId")] News news , HttpPostedFileBase ResimYol)
         {
             if (ModelState.IsValid)
             {
+                if (ResimYol != null && ResimYol.ContentLength > 0)
+                {
+                    using (var reader = new System.IO.BinaryReader(ResimYol.InputStream))
+                    {
+                        news.ResimYol = reader.ReadBytes(ResimYol.ContentLength);
+                    }
+                }
                 db.NewsSet.Add(news);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -88,10 +98,25 @@ namespace Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Baslik,Text,YayimTarihi,ResimYol,CategoryId,AuthorId,NewsTypeId")] News news)
+        [ValidateInput(false)]
+        public ActionResult Edit([Bind(Include = "Id,Baslik,Text,YayimTarihi,CategoryId,AuthorId,NewsTypeId")] News news , HttpPostedFileBase ResimYol)
         {
             if (ModelState.IsValid)
             {
+                db.Entry(news).State = EntityState.Modified;
+
+                if (ResimYol != null && ResimYol.ContentLength > 0)
+                {
+                    using (var reader = new System.IO.BinaryReader(ResimYol.InputStream))
+                    {
+                        news.ResimYol = reader.ReadBytes(ResimYol.ContentLength);
+                    }
+                }
+                else
+                {
+                    db.Entry(news).Property("ResimYol").IsModified = false;
+                }
+
                 db.Entry(news).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -135,6 +160,15 @@ namespace Admin.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public ActionResult ResimYol(int id)
+        {
+            byte[] file = db.NewsSet.Find(id).ResimYol;
+            if (file == null)
+            {
+                return Content("Resim bulunamadı");
+            }
+            return File(file, ImageHelper.GetContentType(file).ToString());
         }
     }
 }

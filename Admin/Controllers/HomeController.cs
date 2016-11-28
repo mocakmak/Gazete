@@ -38,5 +38,10 @@ namespace Admin.Controllers
 
             return View();
         }
+        public ActionResult Logout()
+        {
+            Session.Remove("user");
+            return Redirect("Index");
+        }
     }
 }
