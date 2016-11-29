@@ -92,7 +92,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\icheck\minimal.css" />
+    <Content Include="Content\main.css" />
+    <Content Include="Content\plugins.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\typicons.min.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -114,7 +118,26 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\page-dashboard.js" />
+    <Content Include="Scripts\plugins\bootstrap.min.js" />
+    <Content Include="Scripts\plugins\calendar\calendar.min.js" />
+    <Content Include="Scripts\plugins\calendar\underscore.min.js" />
+    <Content Include="Scripts\plugins\datepicker\datetimepicker.min.js" />
+    <Content Include="Scripts\plugins\datepicker\moment.min.js" />
+    <Content Include="Scripts\plugins\enscroll.min.js" />
+    <Content Include="Scripts\plugins\footable.min.js" />
+    <Content Include="Scripts\plugins\icheck.min.js" />
+    <Content Include="Scripts\plugins\jquery.min.js" />
+    <Content Include="Scripts\plugins\knob.min.js" />
+    <Content Include="Scripts\plugins\maskedinput.min.js" />
+    <Content Include="Scripts\plugins\modernizr.min.js" />
+    <Content Include="Scripts\plugins\multimenu.min.js" />
+    <Content Include="Scripts\plugins\rickshaw\d3.v3.js" />
+    <Content Include="Scripts\plugins\rickshaw\rickshaw.min.js" />
+    <Content Include="Scripts\plugins\sparkline.min.js" />
+    <Content Include="Scripts\plugins\summernote.min.js" />
     <Content Include="Scripts\tinymce\jquery.tinymce.min.js" />
     <Content Include="Scripts\tinymce\license.txt" />
     <Content Include="Scripts\tinymce\plugins\advlist\plugin.js" />
@@ -362,6 +385,7 @@
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.eot" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\readme.md" />
     <Content Include="Scripts\tinymce\langs\readme.md" />
+    <Content Include="Scripts\plugins\flot.min.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
