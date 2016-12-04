@@ -1,0 +1,24 @@
+﻿@model IQueryable<Data.News>
+@{
+    ViewBag.Title = "Anasayfa";
+}
+@foreach (var habers in Model)
+{
+    <div class="row">
+        <h2>@habers.Baslik</h2>
+        <div>
+            @Html.Raw(habers.Text)
+        </div>
+        <div class="well posts-detail">
+            @Html.ActionLink("Devamını oku", "Show", "News", new { id = habers.Id }, null) |
+            @Html.ActionLink(habers.Category.Adi, "Index", "News", new { id = habers.Category.Id }, null) |
+            @habers.Comment.Count Yorum |
+            <span class="glyphicon glyphicon-time"></span> @habers.YayimTarihi.ToString()
+        </div>
+    </div>
+}
+<hr />
+<div class="row pull-right">
+    @Html.ActionLink("Sonraki sayfa", "Index",
+    new { start = ViewBag.start, pageSize = ViewBag.pageSize })
+</div>
