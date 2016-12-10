@@ -6,6 +6,11 @@
 {
     <div class="row">
         <h2>@habers.Baslik</h2>
+        <hr />
+        <div style="text-align:center">
+            <img src="@Url.Action("ResimYol",new{@id = habers.Id})" width="600" height="300" />
+        </div>
+        <hr />
         <div>
             @Html.Raw(habers.Text)
         </div>

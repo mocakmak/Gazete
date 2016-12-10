@@ -5,11 +5,17 @@
 <!-- Blog Post -->
 <!-- Title -->
 <h1>@Model.Baslik</h1>
-<hr>
-<!-- Date/Time -->
-<p><span class="glyphicon glyphicon-time"></span> @Model.YayimTarihi.ToString()</p>
+<hr><div style="text-align:center">
+    <img src="@Url.Action("ResimYol",new{@id = Model.Id})" width="600" height="300" />
+</div>
+
 <hr>
 @Html.Raw(Model.Text)
+<hr />
+<!-- Date/Time -->
+<p><span class="glyphicon glyphicon-time"></span> @Model.YayimTarihi.ToString()</p>
+
+
 <hr>
 @if (TempData["comment_error"] != null)
 {

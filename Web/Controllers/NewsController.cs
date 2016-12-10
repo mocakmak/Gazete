@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Web.Helpers;
 
 namespace Web.Controllers
 {
@@ -55,6 +56,7 @@ namespace Web.Controllers
             }
 
             var comment = new Comment();
+            comment.Baslik = "yorum basligi"; 
             comment.Date = DateTime.Now;
             comment.NewsId = post_id;
             comment.Text = comment_text;
@@ -84,6 +86,15 @@ namespace Web.Controllers
         {
             var list = gazeteler.NewsSet.Where(q => q.CategoryId == id).Select(x => new { x.Id, x.Baslik });
             return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ResimYol(int id)
+        {
+            byte[] file = gazeteler.NewsSet.Find(id).ResimYol;
+            if (file == null)
+            {
+                return Content("Resim bulunamadı");
+            }
+            return File(file, ImageHelper.GetContentType(file).ToString());
         }
    
     }

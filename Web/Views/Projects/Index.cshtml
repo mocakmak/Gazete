@@ -1,0 +1,49 @@
+﻿@model IQueryable<Data.Author>
+@{
+    ViewBag.Title = "Index";
+}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Adı</th>
+            <th>Soyadı</th>
+            <th>Telefon</th>
+            <th>Mail</th>
+            <th>Fotoğraf</th>
+        </tr>
+    </thead>
+    @*@foreach (var project in Model)
+    {
+        <tr>
+            <td>@project.Id</td>
+            <td>@project.Title</td>
+            <td>@Html.Raw(project.Text)</td>
+            <td>
+                @{
+        var user = (Data.User)Session["user"];
+
+        if (user == null)
+        {
+            @Html.ActionLink("İndirmek için giriş yap", "LoginForm", "User")
+        }
+        else
+        {
+            var access = project.ProjectAccess.FirstOrDefault(q => q.UserId == user.Id);
+            if (access == null)
+            {
+                @Html.ActionLink("Satın Al", "Index", "Credit", new { id = project.Id }, null)
+
+            }
+            else
+            {
+                @Html.ActionLink("İndir", "Download", "Projects", new { id = project.Id }, null)
+
+            }
+        }
+                }
+            </td>
+            <td>@project.Price TL</td>
+        </tr>
+    }*@
+</table>
