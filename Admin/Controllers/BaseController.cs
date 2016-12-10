@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,8 +10,22 @@ namespace Admin.Controllers
     [Filters.AdminAuthorize]
     public class BaseController : Controller
     {
-        // GET: Base
-        
-        
+        public gazeteContainer db = new gazeteContainer();
+
+        public BaseController()
+        {
+            var user = (User)System.Web.HttpContext.Current.Session["user"];
+            if (user != null)
+            {
+                var context = System.Web.HttpContext.Current;
+                Log log = new Log();
+                log.UserId = user.Id;
+                log.Date = DateTime.Now;
+                log.Subject = context.Request.Path;
+                log.Detail = context.Request.Params.ToString();
+                db.LogSet.Add(log);
+                db.SaveChangesAsync();
+            }
+        }
     }
 }

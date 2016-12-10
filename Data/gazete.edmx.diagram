@@ -22,6 +22,8 @@
         <AssociationConnector Association="gazete.NewsTypeNews" />
         <AssociationConnector Association="gazete.NewsPicture" />
         <AssociationConnector Association="gazete.NewsComment" />
+        <EntityTypeShape EntityType="gazete.Log" Width="1.5" PointX="2.125" PointY="4.25" />
+        <AssociationConnector Association="gazete.UserLog" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

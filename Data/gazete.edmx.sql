@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/27/2016 18:30:23
+-- Date Created: 12/10/2016 18:45:53
 -- Generated from EDMX file: C:\Users\Murat\Desktop\Gazete ve Haber\GazeteVeHaber\Data\gazete.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,62 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_UserTypeUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserSet] DROP CONSTRAINT [FK_UserTypeUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserPayment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PaymentSet] DROP CONSTRAINT [FK_UserPayment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserComment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CommentSet] DROP CONSTRAINT [FK_UserComment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CategoryNews]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[NewsSet] DROP CONSTRAINT [FK_CategoryNews];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AuthorNews]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[NewsSet] DROP CONSTRAINT [FK_AuthorNews];
+GO
+IF OBJECT_ID(N'[dbo].[FK_NewsTypeNews]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[NewsSet] DROP CONSTRAINT [FK_NewsTypeNews];
+GO
+IF OBJECT_ID(N'[dbo].[FK_NewsPicture]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PictureSet] DROP CONSTRAINT [FK_NewsPicture];
+GO
+IF OBJECT_ID(N'[dbo].[FK_NewsComment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CommentSet] DROP CONSTRAINT [FK_NewsComment];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[UserSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserSet];
+GO
+IF OBJECT_ID(N'[dbo].[UserTypeSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserTypeSet];
+GO
+IF OBJECT_ID(N'[dbo].[AuthorSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AuthorSet];
+GO
+IF OBJECT_ID(N'[dbo].[NewsSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[NewsSet];
+GO
+IF OBJECT_ID(N'[dbo].[NewsTypeSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[NewsTypeSet];
+GO
+IF OBJECT_ID(N'[dbo].[CategorySet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CategorySet];
+GO
+IF OBJECT_ID(N'[dbo].[PictureSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PictureSet];
+GO
+IF OBJECT_ID(N'[dbo].[CommentSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CommentSet];
+GO
+IF OBJECT_ID(N'[dbo].[PaymentSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PaymentSet];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -113,6 +164,16 @@ CREATE TABLE [dbo].[PaymentSet] (
 );
 GO
 
+-- Creating table 'LogSet'
+CREATE TABLE [dbo].[LogSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [UserId] int  NOT NULL,
+    [Subject] nvarchar(max)  NOT NULL,
+    [Detail] nvarchar(max)  NOT NULL,
+    [Date] datetime  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -168,6 +229,12 @@ GO
 -- Creating primary key on [Id] in table 'PaymentSet'
 ALTER TABLE [dbo].[PaymentSet]
 ADD CONSTRAINT [PK_PaymentSet]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'LogSet'
+ALTER TABLE [dbo].[LogSet]
+ADD CONSTRAINT [PK_LogSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -293,6 +360,21 @@ GO
 CREATE INDEX [IX_FK_NewsComment]
 ON [dbo].[CommentSet]
     ([NewsId]);
+GO
+
+-- Creating foreign key on [UserId] in table 'LogSet'
+ALTER TABLE [dbo].[LogSet]
+ADD CONSTRAINT [FK_UserLog]
+    FOREIGN KEY ([UserId])
+    REFERENCES [dbo].[UserSet]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserLog'
+CREATE INDEX [IX_FK_UserLog]
+ON [dbo].[LogSet]
+    ([UserId]);
 GO
 
 -- --------------------------------------------------

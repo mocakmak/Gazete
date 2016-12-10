@@ -15,6 +15,7 @@
     <EntitySet Name="PictureSet" EntityType="gazete.Store.PictureSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CommentSet" EntityType="gazete.Store.CommentSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PaymentSet" EntityType="gazete.Store.PaymentSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LogSet" EntityType="gazete.Store.LogSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserTypeUser" Association="gazete.Store.UserTypeUser">
       <End Role="UserType" EntitySet="UserTypeSet" />
       <End Role="User" EntitySet="UserSet" />
@@ -46,6 +47,10 @@
     <AssociationSet Name="NewsComment" Association="gazete.Store.NewsComment">
       <End Role="News" EntitySet="NewsSet" />
       <End Role="Comment" EntitySet="CommentSet" />
+    </AssociationSet>
+    <AssociationSet Name="UserLog" Association="gazete.Store.UserLog">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Log" EntitySet="LogSet" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserSet">
@@ -132,6 +137,16 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="Amount" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Subject" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Detail" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Date" Type="datetime" Nullable="false" />
   </EntityType>
   <Association Name="UserTypeUser">
@@ -230,6 +245,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="UserLog">
+    <End Role="User" Type="gazete.Store.UserSet" Multiplicity="1" />
+    <End Role="Log" Type="gazete.Store.LogSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Log">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -276,6 +303,11 @@
             <End Role="News" EntitySet="NewsSet" />
             <End Role="Comment" EntitySet="CommentSet" />
           </AssociationSet>
+          <EntitySet Name="LogSet" EntityType="gazete.Log" />
+          <AssociationSet Name="UserLog" Association="gazete.UserLog">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Log" EntitySet="LogSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -290,6 +322,7 @@
           <NavigationProperty Name="UserType" Relationship="gazete.UserTypeUser" FromRole="User" ToRole="UserType" />
           <NavigationProperty Name="Payment" Relationship="gazete.UserPayment" FromRole="User" ToRole="Payment" />
           <NavigationProperty Name="Comment" Relationship="gazete.UserComment" FromRole="User" ToRole="Comment" />
+          <NavigationProperty Name="Log" Relationship="gazete.UserLog" FromRole="User" ToRole="Log" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -475,6 +508,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Subject" Type="String" Nullable="false" />
+          <Property Name="Detail" Type="String" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="gazete.UserLog" FromRole="Log" ToRole="User" />
+        </EntityType>
+        <Association Name="UserLog">
+          <End Type="gazete.User" Role="User" Multiplicity="1" />
+          <End Type="gazete.Log" Role="Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -572,6 +628,17 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LogSet">
+      <EntityTypeMapping TypeName="IsTypeOf(gazete.Log)">
+        <MappingFragment StoreEntitySet="LogSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="Detail" ColumnName="Detail" />
           <ScalarProperty Name="Date" ColumnName="Date" />
         </MappingFragment>
       </EntityTypeMapping>

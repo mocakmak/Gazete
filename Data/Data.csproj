@@ -119,6 +119,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>gazete.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Log.cs">
+      <DependentUpon>gazete.tt</DependentUpon>
+    </Compile>
     <Compile Include="News.cs">
       <DependentUpon>gazete.tt</DependentUpon>
     </Compile>
