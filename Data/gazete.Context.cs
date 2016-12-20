@@ -35,5 +35,8 @@ namespace Data
         public virtual DbSet<Comment> CommentSet { get; set; }
         public virtual DbSet<Payment> PaymentSet { get; set; }
         public virtual DbSet<Log> LogSet { get; set; }
+        public virtual DbSet<Project> ProjectSet { get; set; }
+        public virtual DbSet<Cart> CartSet { get; set; }
+        public virtual DbSet<ProjectAccess> ProjectAccessSet { get; set; }
     }
 }

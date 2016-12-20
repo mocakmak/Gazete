@@ -12,14 +12,15 @@ namespace Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Payment
+    public partial class Cart
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public decimal Amount { get; set; }
-        public System.DateTime Date { get; set; }
+        public CartStatus Status { get; set; }
+        public int Count { get; set; }
+        public int ProjectId { get; set; }
     
         public virtual User User { get; set; }
-        public virtual ProjectAccess ProjectAccess { get; set; }
+        public virtual Project Project { get; set; }
     }
 }

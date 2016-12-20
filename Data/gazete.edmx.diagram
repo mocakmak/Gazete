@@ -5,15 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="c2377724907c4c4ba306d307da2085fd" Name="Diagram1" DisplayType="true" >
-        <EntityTypeShape EntityType="gazete.User" Width="1.5" PointX="1.625" PointY="0.875" />
+        <EntityTypeShape EntityType="gazete.User" Width="1.5" PointX="2" PointY="0.5" />
         <EntityTypeShape EntityType="gazete.UserType" Width="1.5" PointX="4" PointY="0.75" />
         <EntityTypeShape EntityType="gazete.Author" Width="1.5" PointX="6.125" PointY="0.625" />
-        <EntityTypeShape EntityType="gazete.News" Width="1.5" PointX="11.125" PointY="4.125" />
+        <EntityTypeShape EntityType="gazete.News" Width="1.5" PointX="4.875" PointY="5.375" />
         <EntityTypeShape EntityType="gazete.NewsType" Width="1.5" PointX="4.25" PointY="3.375" />
         <EntityTypeShape EntityType="gazete.Category" Width="1.5" PointX="6.75" PointY="3.125" />
         <EntityTypeShape EntityType="gazete.Picture" Width="1.5" PointX="8.375" PointY="0.625" />
         <EntityTypeShape EntityType="gazete.Comment" Width="1.5" PointX="8.5" PointY="3.25" />
-        <EntityTypeShape EntityType="gazete.Payment" Width="1.5" PointX="11.5" PointY="1.375" />
+        <EntityTypeShape EntityType="gazete.Payment" Width="1.5" PointX="12.75" PointY="0.5" />
         <AssociationConnector Association="gazete.UserTypeUser" />
         <AssociationConnector Association="gazete.UserPayment" />
         <AssociationConnector Association="gazete.UserComment" />
@@ -24,6 +24,15 @@
         <AssociationConnector Association="gazete.NewsComment" />
         <EntityTypeShape EntityType="gazete.Log" Width="1.5" PointX="2.125" PointY="4.25" />
         <AssociationConnector Association="gazete.UserLog" />
+        <EntityTypeShape EntityType="gazete.Project" Width="1.5" PointX="10.25" PointY="3.25" />
+        <EntityTypeShape EntityType="gazete.Cart" Width="1.5" PointX="12.375" PointY="2.75" />
+        <EntityTypeShape EntityType="gazete.ProjectAccess" Width="1.5" PointX="10.125" PointY="0.625" />
+        <AssociationConnector Association="gazete.UserProjectAccess" />
+        <AssociationConnector Association="gazete.ProjectProjectAccess" />
+        <AssociationConnector Association="gazete.UserCart" />
+        <AssociationConnector Association="gazete.ProjectCart" />
+        <AssociationConnector Association="gazete.UserProject" />
+        <AssociationConnector Association="gazete.ProjectAccessPayment" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

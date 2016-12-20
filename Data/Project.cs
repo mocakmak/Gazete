@@ -12,31 +12,25 @@ namespace Data
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Project
     {
-        public User()
+        public Project()
         {
-            this.Payment = new HashSet<Payment>();
-            this.Comment = new HashSet<Comment>();
-            this.Log = new HashSet<Log>();
             this.ProjectAccess = new HashSet<ProjectAccess>();
             this.Cart = new HashSet<Cart>();
-            this.Project = new HashSet<Project>();
         }
     
         public int Id { get; set; }
-        public int UserTypeId { get; set; }
-        public string Name { get; set; }
-        public string Mail { get; set; }
-        public string Password { get; set; }
-        public byte[] Avatar { get; set; }
+        public int UserId { get; set; }
+        public string Title { get; set; }
+        public string Text { get; set; }
+        public byte[] File { get; set; }
+        public string FileName { get; set; }
+        public string ContentType { get; set; }
+        public decimal Price { get; set; }
     
-        public virtual UserType UserType { get; set; }
-        public virtual ICollection<Payment> Payment { get; set; }
-        public virtual ICollection<Comment> Comment { get; set; }
-        public virtual ICollection<Log> Log { get; set; }
         public virtual ICollection<ProjectAccess> ProjectAccess { get; set; }
         public virtual ICollection<Cart> Cart { get; set; }
-        public virtual ICollection<Project> Project { get; set; }
+        public virtual User User { get; set; }
     }
 }

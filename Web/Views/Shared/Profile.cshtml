@@ -6,5 +6,6 @@
     Merhaba <b>@Model.Name</b>, Hoş geldin !<br /><br />
     <p>Yorum adedi: @Model.Comment.Count</p>
     @Html.ActionLink("Çıkış Yap", "Logout", "User", null, new { @class = "btn btn-danger" })
+    @Html.ActionLink("Sepetim", "Index", "Cart", null, new { @class = "btn btn-success" })
     <div class="clearfix"></div>
 </div>

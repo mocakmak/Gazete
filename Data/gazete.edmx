@@ -16,6 +16,9 @@
     <EntitySet Name="CommentSet" EntityType="gazete.Store.CommentSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PaymentSet" EntityType="gazete.Store.PaymentSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LogSet" EntityType="gazete.Store.LogSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectSet" EntityType="gazete.Store.ProjectSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CartSet" EntityType="gazete.Store.CartSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectAccessSet" EntityType="gazete.Store.ProjectAccessSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserTypeUser" Association="gazete.Store.UserTypeUser">
       <End Role="UserType" EntitySet="UserTypeSet" />
       <End Role="User" EntitySet="UserSet" />
@@ -51,6 +54,30 @@
     <AssociationSet Name="UserLog" Association="gazete.Store.UserLog">
       <End Role="User" EntitySet="UserSet" />
       <End Role="Log" EntitySet="LogSet" />
+    </AssociationSet>
+    <AssociationSet Name="UserProjectAccess" Association="gazete.Store.UserProjectAccess">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="ProjectAccess" EntitySet="ProjectAccessSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProjectProjectAccess" Association="gazete.Store.ProjectProjectAccess">
+      <End Role="Project" EntitySet="ProjectSet" />
+      <End Role="ProjectAccess" EntitySet="ProjectAccessSet" />
+    </AssociationSet>
+    <AssociationSet Name="UserCart" Association="gazete.Store.UserCart">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Cart" EntitySet="CartSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProjectCart" Association="gazete.Store.ProjectCart">
+      <End Role="Project" EntitySet="ProjectSet" />
+      <End Role="Cart" EntitySet="CartSet" />
+    </AssociationSet>
+    <AssociationSet Name="UserProject" Association="gazete.Store.UserProject">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Project" EntitySet="ProjectSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProjectAccessPayment" Association="gazete.Store.ProjectAccessPayment">
+      <End Role="ProjectAccess" EntitySet="ProjectAccessSet" />
+      <End Role="Payment" EntitySet="PaymentSet" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserSet">
@@ -136,8 +163,9 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
-    <Property Name="Amount" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Nullable="false" Precision="18" Scale="2" />
     <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="ProjectAccess_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="LogSet">
     <Key>
@@ -148,6 +176,37 @@
     <Property Name="Subject" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Detail" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="File" Type="varbinary(max)" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ContentType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="decimal" Nullable="false" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="CartSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="Count" Type="int" Nullable="false" />
+    <Property Name="ProjectId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectAccessSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="ProjectId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="UserTypeUser">
     <End Role="UserType" Type="gazete.Store.UserTypeSet" Multiplicity="1" />
@@ -257,6 +316,78 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="UserProjectAccess">
+    <End Role="User" Type="gazete.Store.UserSet" Multiplicity="1" />
+    <End Role="ProjectAccess" Type="gazete.Store.ProjectAccessSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProjectAccess">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProjectProjectAccess">
+    <End Role="Project" Type="gazete.Store.ProjectSet" Multiplicity="1" />
+    <End Role="ProjectAccess" Type="gazete.Store.ProjectAccessSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProjectAccess">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserCart">
+    <End Role="User" Type="gazete.Store.UserSet" Multiplicity="1" />
+    <End Role="Cart" Type="gazete.Store.CartSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProjectCart">
+    <End Role="Project" Type="gazete.Store.ProjectSet" Multiplicity="1" />
+    <End Role="Cart" Type="gazete.Store.CartSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserProject">
+    <End Role="User" Type="gazete.Store.UserSet" Multiplicity="1" />
+    <End Role="Project" Type="gazete.Store.ProjectSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProjectAccessPayment">
+    <End Role="ProjectAccess" Type="gazete.Store.ProjectAccessSet" Multiplicity="1" />
+    <End Role="Payment" Type="gazete.Store.PaymentSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectAccess">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Payment">
+        <PropertyRef Name="ProjectAccess_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -308,6 +439,33 @@
             <End Role="User" EntitySet="UserSet" />
             <End Role="Log" EntitySet="LogSet" />
           </AssociationSet>
+          <EntitySet Name="ProjectSet" EntityType="gazete.Project" />
+          <EntitySet Name="CartSet" EntityType="gazete.Cart" />
+          <EntitySet Name="ProjectAccessSet" EntityType="gazete.ProjectAccess" />
+          <AssociationSet Name="UserProjectAccess" Association="gazete.UserProjectAccess">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="ProjectAccess" EntitySet="ProjectAccessSet" />
+          </AssociationSet>
+          <AssociationSet Name="ProjectProjectAccess" Association="gazete.ProjectProjectAccess">
+            <End Role="Project" EntitySet="ProjectSet" />
+            <End Role="ProjectAccess" EntitySet="ProjectAccessSet" />
+          </AssociationSet>
+          <AssociationSet Name="UserCart" Association="gazete.UserCart">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Cart" EntitySet="CartSet" />
+          </AssociationSet>
+          <AssociationSet Name="ProjectCart" Association="gazete.ProjectCart">
+            <End Role="Project" EntitySet="ProjectSet" />
+            <End Role="Cart" EntitySet="CartSet" />
+          </AssociationSet>
+          <AssociationSet Name="UserProject" Association="gazete.UserProject">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Project" EntitySet="ProjectSet" />
+          </AssociationSet>
+          <AssociationSet Name="ProjectAccessPayment" Association="gazete.ProjectAccessPayment">
+            <End Role="ProjectAccess" EntitySet="ProjectAccessSet" />
+            <End Role="Payment" EntitySet="PaymentSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -323,6 +481,9 @@
           <NavigationProperty Name="Payment" Relationship="gazete.UserPayment" FromRole="User" ToRole="Payment" />
           <NavigationProperty Name="Comment" Relationship="gazete.UserComment" FromRole="User" ToRole="Comment" />
           <NavigationProperty Name="Log" Relationship="gazete.UserLog" FromRole="User" ToRole="Log" />
+          <NavigationProperty Name="ProjectAccess" Relationship="gazete.UserProjectAccess" FromRole="User" ToRole="ProjectAccess" />
+          <NavigationProperty Name="Cart" Relationship="gazete.UserCart" FromRole="User" ToRole="Cart" />
+          <NavigationProperty Name="Project" Relationship="gazete.UserProject" FromRole="User" ToRole="Project" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -408,9 +569,10 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="Amount" Type="String" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Date" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="User" Relationship="gazete.UserPayment" FromRole="Payment" ToRole="User" />
+          <NavigationProperty Name="ProjectAccess" Relationship="gazete.ProjectAccessPayment" FromRole="Payment" ToRole="ProjectAccess" />
         </EntityType>
         <Association Name="UserTypeUser">
           <End Type="gazete.UserType" Role="UserType" Multiplicity="1" />
@@ -531,6 +693,114 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProjectAccess" Relationship="gazete.ProjectProjectAccess" FromRole="Project" ToRole="ProjectAccess" />
+          <Property Name="Title" Type="String" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" />
+          <Property Name="File" Type="Binary" Nullable="false" />
+          <Property Name="FileName" Type="String" Nullable="false" />
+          <Property Name="ContentType" Type="String" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="Cart" Relationship="gazete.ProjectCart" FromRole="Project" ToRole="Cart" />
+          <NavigationProperty Name="User" Relationship="gazete.UserProject" FromRole="Project" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="gazete.CartStatus" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="gazete.UserCart" FromRole="Cart" ToRole="User" />
+          <NavigationProperty Name="Project" Relationship="gazete.ProjectCart" FromRole="Cart" ToRole="Project" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProjectAccess">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="User" Relationship="gazete.UserProjectAccess" FromRole="ProjectAccess" ToRole="User" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Project" Relationship="gazete.ProjectProjectAccess" FromRole="ProjectAccess" ToRole="Project" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Payment" Relationship="gazete.ProjectAccessPayment" FromRole="ProjectAccess" ToRole="Payment" />
+        </EntityType>
+        <Association Name="UserProjectAccess">
+          <End Type="gazete.User" Role="User" Multiplicity="1" />
+          <End Type="gazete.ProjectAccess" Role="ProjectAccess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectAccess">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProjectProjectAccess">
+          <End Type="gazete.Project" Role="Project" Multiplicity="1" />
+          <End Type="gazete.ProjectAccess" Role="ProjectAccess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectAccess">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserCart">
+          <End Type="gazete.User" Role="User" Multiplicity="1" />
+          <End Type="gazete.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProjectCart">
+          <End Type="gazete.Project" Role="Project" Multiplicity="1" />
+          <End Type="gazete.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserProject">
+          <End Type="gazete.User" Role="User" Multiplicity="1" />
+          <End Type="gazete.Project" Role="Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProjectAccessPayment">
+          <End Type="gazete.ProjectAccess" Role="ProjectAccess" Multiplicity="1" />
+          <End Type="gazete.Payment" Role="Payment" Multiplicity="0..1" />
+        </Association>
+        <EnumType Name="CartStatus">
+          <Member Name="New" />
+          <Member Name="Paid" />
+          <Member Name="Canceled" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -643,6 +913,48 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProjectSet">
+      <EntityTypeMapping TypeName="IsTypeOf(gazete.Project)">
+        <MappingFragment StoreEntitySet="ProjectSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="File" ColumnName="File" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartSet">
+      <EntityTypeMapping TypeName="IsTypeOf(gazete.Cart)">
+        <MappingFragment StoreEntitySet="CartSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectAccessSet">
+      <EntityTypeMapping TypeName="IsTypeOf(gazete.ProjectAccess)">
+        <MappingFragment StoreEntitySet="ProjectAccessSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ProjectAccessPayment" TypeName="gazete.ProjectAccessPayment" StoreEntitySet="PaymentSet">
+      <EndProperty Name="ProjectAccess">
+        <ScalarProperty Name="Id" ColumnName="ProjectAccess_Id" />
+      </EndProperty>
+      <EndProperty Name="Payment">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

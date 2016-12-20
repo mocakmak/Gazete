@@ -98,6 +98,12 @@
     <Compile Include="Author.cs">
       <DependentUpon>gazete.tt</DependentUpon>
     </Compile>
+    <Compile Include="Cart.cs">
+      <DependentUpon>gazete.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CartStatus.cs">
+      <DependentUpon>gazete.tt</DependentUpon>
+    </Compile>
     <Compile Include="Category.cs">
       <DependentUpon>gazete.tt</DependentUpon>
     </Compile>
@@ -132,6 +138,12 @@
       <DependentUpon>gazete.tt</DependentUpon>
     </Compile>
     <Compile Include="Picture.cs">
+      <DependentUpon>gazete.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Project.cs">
+      <DependentUpon>gazete.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectAccess.cs">
       <DependentUpon>gazete.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

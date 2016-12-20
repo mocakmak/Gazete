@@ -33,7 +33,7 @@ else if (TempData["comment_success"] != null)
 else
 {
     <div class="well" id="form_standart">
-        <span class="pull-right text-danger">Eski Usul</span>
+        <span class="pull-right text-danger"></span>
         <h4>Yorum Yaz:</h4>
         @using (Html.BeginForm("Comment", "News", FormMethod.Post))
         {
@@ -48,7 +48,7 @@ else
     </div>
 
     <div class="well hide" id="form_ajax">
-        <span class="pull-right text-success">Ajax qeyfiii</span>
+        <span class="pull-right text-success"></span>
         <h4>Yorum Yaz:</h4>
         @using (Ajax.BeginForm("CommentAjax", null, null, new AjaxOptions
         {

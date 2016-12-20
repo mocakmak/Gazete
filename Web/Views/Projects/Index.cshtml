@@ -1,49 +1,101 @@
-﻿@model IQueryable<Data.Author>
+﻿@model IQueryable<Data.Project>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Projeler";
+}
+@if (Web.Helpers.UserHelper.isMember() == true)
+{
+    <div class="row alert alert-info">
+        <h3 class="col-sm-9" style="margin: 10px 0;">
+            Hemen Al ! Kampanyadan yararlan !
+        </h3>
+        <div class="col-sm-3">
+            @Html.ActionLink("Sepetime git", "Index", "Cart", null, new { @class = "btn btn-success btn-lg" })
+        </div>
+    </div>
+
 }
 <table class="table table-hover">
     <thead>
         <tr>
             <th>No</th>
             <th>Adı</th>
-            <th>Soyadı</th>
-            <th>Telefon</th>
-            <th>Mail</th>
-            <th>Fotoğraf</th>
+            <th>Detayı</th>
+            <th>Fiyatı</th>
+            <th colspan="2" class="text-center">İşlem</th>
         </tr>
     </thead>
-    @*@foreach (var project in Model)
+    @foreach (var project in Model)
     {
         <tr>
             <td>@project.Id</td>
             <td>@project.Title</td>
             <td>@Html.Raw(project.Text)</td>
+            <td>@project.Price TL</td>
             <td>
-                @{
-        var user = (Data.User)Session["user"];
+                @if (Web.Helpers.UserHelper.isMember() == true)
+                {
+                    if (project.ProjectAccess.FirstOrDefault(q => q.UserId == Web.Helpers.UserHelper.Current().Id) == null)
+                    {
+                        @Html.ActionLink("Hızlı Satın Al", "Index", "Credit", new { id = project.Id }, null)
+                    }
+                    else
+                    {
+                        @Html.ActionLink("İndir", "Download", "Projects", new { id = project.Id }, null)
 
-        if (user == null)
-        {
-            @Html.ActionLink("İndirmek için giriş yap", "LoginForm", "User")
-        }
-        else
-        {
-            var access = project.ProjectAccess.FirstOrDefault(q => q.UserId == user.Id);
-            if (access == null)
-            {
-                @Html.ActionLink("Satın Al", "Index", "Credit", new { id = project.Id }, null)
-
-            }
-            else
-            {
-                @Html.ActionLink("İndir", "Download", "Projects", new { id = project.Id }, null)
-
-            }
-        }
+                    }
+                }
+                else
+                {
+                    @Html.ActionLink("İndirmek için giriş yap", "LoginForm", "User")
                 }
             </td>
-            <td>@project.Price TL</td>
+            @{
+                string statusAdd = String.Empty;
+                string statusRemove = "hide";
+
+                if (Web.Helpers.UserHelper.isMember() == true)
+                {
+                    if (project.Cart.FirstOrDefault(q =>
+                            q.Status == Data.CartStatus.New &&
+                            q.UserId == Web.Helpers.UserHelper.Current().Id &&
+                            q.ProjectId == project.Id) != null
+                        )
+                    {
+                        statusAdd = "hide";
+                        statusRemove = String.Empty;
+                    }
+                    else if (project.ProjectAccess.FirstOrDefault(q => q.UserId == Web.Helpers.UserHelper.Current().Id) != null)
+                    {
+                        statusAdd = "hide";
+                        statusRemove = "hide";
+                        <td></td>
+                    }
+                }
+
+                <td id="tdAdd@(project.Id)" class="@statusAdd">
+                    @Ajax.ActionLink("Sepete Ekle", "AddToCart", new { @id = project.Id },
+                        new AjaxOptions { HttpMethod = "POST", OnSuccess = "ToggleCartButtons" })
+                </td>
+
+                <td id="tdRemove@(project.Id)" class="@statusRemove">
+                    @Ajax.ActionLink("Çıkar", "RemoveFromCart", new { @id = project.Id },
+                  new AjaxOptions { HttpMethod = "POST", OnSuccess = "ToggleCartButtons" })
+                </td>
+
+            }
         </tr>
-    }*@
+    }
 </table>
+@section js{
+    <script src="/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        function ToggleCartButtons(result) {
+            if (result == "login") {
+                alert("Sepete eklemek için giriş yapınız");
+            } else {
+                $("#tdAdd" + result).toggleClass("hide");
+                $("#tdRemove" + result).toggleClass("hide");
+            }
+        }
+    </script>
+}

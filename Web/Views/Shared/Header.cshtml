@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink("Haberler", "Index", "News", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("M-GAZETE", "Index", "News", new { area = "" }, new { @class = "navbar-brand" })
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -18,8 +18,17 @@
                     @Html.ActionLink("Anasayfa", "Index", "News")
                 </li>
                 <li>
-                    @Html.ActionLink("Yazarlar", "Index", "Authors")
+                    @Html.ActionLink("Yazar Satın Alım", "Index", "Projects")
                 </li>
+                @if (Web.Helpers.UserHelper.isMember() == true)
+                {
+                    <li>
+                        @Html.ActionLink("Ödemelerim", "List", "Credit")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Sepetim", "Index", "Cart")
+                    </li>
+                }
                 <li>
                     @Html.ActionLink("İletişim", "Index", "Contact")
                 </li>

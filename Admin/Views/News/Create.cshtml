@@ -34,7 +34,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.YayimTarihi, htmlAttributes: new { @class = "control-label col-md-2" } )
             <div class="col-md-10">
-                @Html.EditorFor(model => model.YayimTarihi, new { htmlAttributes = new { @class = "form-control" , @Value=@DateTime.Now.ToString() ,@readonly="readonly"} } )
+                @Html.EditorFor(model => model.YayimTarihi, new { htmlAttributes = new { @class = "form-control" , @Value=@DateTime.Now.ToString() } } )
                 @Html.ValidationMessageFor(model => model.YayimTarihi, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -79,7 +79,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("GERİ DÖN", "Index")
 </div>
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
